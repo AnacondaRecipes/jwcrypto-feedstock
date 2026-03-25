@@ -1,5 +1,5 @@
 {% set name = "jwcrypto" %}
-{% set version = "1.4.2" %}
+{% set version = "1.5.6" %}
 
 package:
   name: {{ name|lower }}
@@ -7,33 +7,39 @@ package:
 
 source:
   url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: 80a35e9ed1b3b2c43ce03d92c5d48e6d0b6647e2aa2618e4963448923d78a37b
+  sha256: 771a87762a0c081ae6166958a954f80848820b2ab066937dc8b8379d65b1b039
 
 build:
-  noarch: python
+  skip: True  # [py<38]
   number: 0
-  script: {{ PYTHON }} -m pip install . --no-deps --ignore-installed --no-cache-dir -vvv
+  script: {{ PYTHON }} -m pip install . --no-deps --no-build-isolation --ignore-installed --no-cache-dir -vvv
 
 requirements:
   host:
-    - python >=3.6
+    - python
     - pip
     - setuptools
   run:
-    - python >=3.6
-    - cryptography >=2.3
-    - deprecated
+    - python
+    - cryptography >=3.4
+    - typing_extensions >=4.5.0
 
 test:
   imports:
     - jwcrypto
+    - jwcrypto.jwa
+    - jwcrypto.jwe
+    - jwcrypto.jwk
+    - jwcrypto.jws
+    - jwcrypto.jwt
+    - jwcrypto.tests
   requires:
     - pip
   commands:
     - pip check
 
 about:
-  home: https://jwcrypto.readthedocs.io/en/latest/
+  home: https://jwcrypto.readthedocs.io
   license: LGPL-3.0-only
   license_family: LGPL
   license_file: LICENSE
@@ -44,7 +50,7 @@ about:
     Key (JWK) RFC 7518 - JSON Web Algorithms (JWA) RFC 7519 - JSON Web Token
     (JWT) RFC 7520 - Examples of Protecting Content Using JSON Object Signing
     and Encryption (JOSE)
-  doc_url: https://jwcrypto.readthedocs.io/en/latest/
+  doc_url: https://jwcrypto.readthedocs.io
   dev_url: https://github.com/latchset/jwcrypto
 
 extra:
