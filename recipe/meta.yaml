@@ -1,5 +1,5 @@
 {% set name = "jwcrypto" %}
-{% set version = "1.5.7" %}
+{% set version = "1.5.8" %}
 
 package:
   name: {{ name|lower }}
@@ -7,10 +7,10 @@ package:
 
 source:
   url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: 70204d7cca406eda8c82352e3c41ba2d946610dafd19e54403f0a1f4f18633c6
+  sha256: c3d7114b6f6e65b52f6b7da817eb8cb8423e1da31e1ef13508447c81ecbdcc34
 
 build:
-  skip: true  # [py<38]
+  skip: True  # [py<38]
   number: 0
   script: {{ PYTHON }} -m pip install . --no-deps --no-build-isolation --ignore-installed --no-cache-dir -vvv
 
@@ -21,7 +21,7 @@ requirements:
     - hatchling
   run:
     - python
-    - cryptography >=3.4
+    - cryptography >=39.0.0
     - typing_extensions >=4.5.0
 
 test:
